@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rs/rest-layer-mem"
+	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/schema"
 	"github.com/stretchr/testify/assert"

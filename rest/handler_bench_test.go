@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/rs/rest-layer-mem"
+	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/schema"
 )

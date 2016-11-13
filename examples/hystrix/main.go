@@ -14,7 +14,7 @@ import (
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/justinas/alice"
 	"github.com/rs/rest-layer-hystrix"
-	"github.com/rs/rest-layer-mem"
+	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/rest"
 	"github.com/cool-rest/rest-layer/schema"

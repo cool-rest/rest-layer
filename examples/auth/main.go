@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/justinas/alice"
-	"github.com/rs/rest-layer-mem"
+	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/rest"
 	"github.com/cool-rest/rest-layer/schema"
