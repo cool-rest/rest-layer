@@ -12,7 +12,7 @@ func itemDelete(ctx context.Context, r *http.Request, route *RouteMatch) (status
 	if e != nil {
 		return e.Code, nil, e
 	}
-	l, err := route.Resource().Find(ctx, lookup, 1, 1)
+	l, err := route.Resource().Find(ctx, r, lookup, 1, 1)
 	if err != nil {
 		e = NewError(err)
 		return e.Code, nil, e
@@ -25,7 +25,7 @@ func itemDelete(ctx context.Context, r *http.Request, route *RouteMatch) (status
 	if err := checkIntegrityRequest(r, original); err != nil {
 		return err.Code, nil, err
 	}
-	if err := route.Resource().Delete(ctx, original); err != nil {
+	if err := route.Resource().Delete(ctx, r, original); err != nil {
 		e = NewError(err)
 		return e.Code, nil, e
 	}

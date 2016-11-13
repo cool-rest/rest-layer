@@ -40,7 +40,7 @@ func listPost(ctx context.Context, r *http.Request, route *RouteMatch) (status i
 		return e.Code, nil, e
 	}
 	// TODO: add support for batch insert
-	if err := rsrc.Insert(ctx, []*resource.Item{item}); err != nil {
+	if err := rsrc.Insert(ctx, r, []*resource.Item{item}); err != nil {
 		e := NewError(err)
 		return e.Code, nil, e
 	}

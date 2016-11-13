@@ -196,7 +196,7 @@ func subResourceHandler(f Field, def *schema.Field, rsrc *Resource, resolver Ref
 		if v, ok := f.Params["limit"].(int); ok {
 			perPage = v
 		}
-		list, err := rsrc.Find(ctx, l, page, perPage)
+		list, err := rsrc.Find(ctx, nil, l, page, perPage)
 		if err != nil {
 			return nil, fmt.Errorf("%s: error fetching sub-resource: %v", f.Name, err)
 		}

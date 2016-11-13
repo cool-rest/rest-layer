@@ -23,7 +23,7 @@ func itemPut(ctx context.Context, r *http.Request, route *RouteMatch) (status in
 	rsrc := route.Resource()
 	// Fetch original item if exist (PUT can be used to create a document with a manual id)
 	var original *resource.Item
-	if l, err := rsrc.Find(ctx, lookup, 1, 1); err != nil && err != ErrNotFound {
+	if l, err := rsrc.Find(ctx, r, lookup, 1, 1); err != nil && err != ErrNotFound {
 		e = NewError(err)
 		return e.Code, nil, e
 	} else if len(l.Items) == 1 {
@@ -87,12 +87,12 @@ func itemPut(ctx context.Context, r *http.Request, route *RouteMatch) (status in
 	// supposed check the original etag before storing when an original object
 	// is provided.
 	if original != nil {
-		if err := rsrc.Update(ctx, item, original); err != nil {
+		if err := rsrc.Update(ctx, r, item, original); err != nil {
 			e = NewError(err)
 			return e.Code, nil, e
 		}
 	} else {
-		if err := rsrc.Insert(ctx, []*resource.Item{item}); err != nil {
+		if err := rsrc.Insert(ctx, r,  []*resource.Item{item}); err != nil {
 			e = NewError(err)
 			return e.Code, nil, e
 		}

@@ -41,7 +41,7 @@ func listGet(ctx context.Context, r *http.Request, route *RouteMatch) (status in
 	if e != nil {
 		return e.Code, nil, e
 	}
-	list, err := rsrc.Find(ctx, lookup, page, perPage)
+	list, err := rsrc.Find(ctx, r, lookup, page, perPage)
 	if err != nil {
 		e = NewError(err)
 		return e.Code, nil, e

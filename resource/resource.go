@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"sort"
 	"time"
-
+  "net/http"
 	"github.com/cool-rest/rest-layer/schema"
 	"golang.org/x/net/context"
 )
@@ -236,7 +236,7 @@ func (r *Resource) Use(e interface{}) error {
 }
 
 // Get get one item by its id. If item is not found, ErrNotFound error is returned
-func (r *Resource) Get(ctx context.Context, id interface{}) (item *Item, err error) {
+func (r *Resource) Get(ctx context.Context, rq *http.Request, id interface{}) (item *Item, err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			Logger(ctx, LogLevelDebug, fmt.Sprintf("%s.Get(%v)", r.path, id), map[string]interface{}{
@@ -245,16 +245,16 @@ func (r *Resource) Get(ctx context.Context, id interface{}) (item *Item, err err
 			})
 		}(time.Now())
 	}
-	if err = r.hooks.onGet(ctx, id); err == nil {
+	if err = r.hooks.onGet(ctx, rq, id); err == nil {
 		item, err = r.storage.Get(ctx, id)
 	}
-	r.hooks.onGot(ctx, &item, &err)
+	r.hooks.onGot(ctx, rq, &item, &err)
 	return
 }
 
 // MultiGet get some items by their id and return them in the same order. If one or more item(s)
 // is not found, their slot in the response is set to nil.
-func (r *Resource) MultiGet(ctx context.Context, ids []interface{}) (items []*Item, err error) {
+func (r *Resource) MultiGet(ctx context.Context, rq *http.Request, ids []interface{}) (items []*Item, err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			Logger(ctx, LogLevelDebug, fmt.Sprintf("%s.MultiGet(%v)", r.path, ids), map[string]interface{}{
@@ -266,7 +266,7 @@ func (r *Resource) MultiGet(ctx context.Context, ids []interface{}) (items []*It
 	}
 	errs := make([]error, len(ids))
 	for i, id := range ids {
-		errs[i] = r.hooks.onGet(ctx, id)
+		errs[i] = r.hooks.onGet(ctx, rq, id)
 		if err == nil && errs[i] != nil {
 			// first pre-hook error is the global error
 			err = errs[i]
@@ -287,7 +287,7 @@ func (r *Resource) MultiGet(ctx context.Context, ids []interface{}) (items []*It
 		if _err == nil {
 			_err = err
 		}
-		r.hooks.onGot(ctx, &_item, &_err)
+		r.hooks.onGot(ctx, rq,  &_item, &_err)
 		if errOverwrite == nil && _err != errs[i] {
 			errOverwrite = _err // apply change done on the first error
 		}
@@ -305,7 +305,7 @@ func (r *Resource) MultiGet(ctx context.Context, ids []interface{}) (items []*It
 }
 
 // Find implements Storer interface
-func (r *Resource) Find(ctx context.Context, lookup *Lookup, page, perPage int) (list *ItemList, err error) {
+func (r *Resource) Find(ctx context.Context, rq *http.Request, lookup *Lookup, page, perPage int) (list *ItemList, err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			found := -1
@@ -319,15 +319,15 @@ func (r *Resource) Find(ctx context.Context, lookup *Lookup, page, perPage int) 
 			})
 		}(time.Now())
 	}
-	if err = r.hooks.onFind(ctx, lookup, page, perPage); err == nil {
+	if err = r.hooks.onFind(ctx, rq, lookup, page, perPage); err == nil {
 		list, err = r.storage.Find(ctx, lookup, page, perPage)
 	}
-	r.hooks.onFound(ctx, lookup, &list, &err)
+	r.hooks.onFound(ctx, rq, lookup, &list, &err)
 	return
 }
 
 // Insert implements Storer interface
-func (r *Resource) Insert(ctx context.Context, items []*Item) (err error) {
+func (r *Resource) Insert(ctx context.Context, rq *http.Request, items []*Item) (err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			Logger(ctx, LogLevelDebug, fmt.Sprintf("%s.Insert(items[%d])", r.path, len(items)), map[string]interface{}{
@@ -336,15 +336,15 @@ func (r *Resource) Insert(ctx context.Context, items []*Item) (err error) {
 			})
 		}(time.Now())
 	}
-	if err = r.hooks.onInsert(ctx, items); err == nil {
+	if err = r.hooks.onInsert(ctx, rq, items); err == nil {
 		err = r.storage.Insert(ctx, items)
 	}
-	r.hooks.onInserted(ctx, items, &err)
+	r.hooks.onInserted(ctx, rq, items, &err)
 	return
 }
 
 // Update implements Storer interface
-func (r *Resource) Update(ctx context.Context, item *Item, original *Item) (err error) {
+func (r *Resource) Update(ctx context.Context, rq *http.Request, item *Item, original *Item) (err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			Logger(ctx, LogLevelDebug, fmt.Sprintf("%s.Update(%v, %v)", r.path, item.ID, original.ID), map[string]interface{}{
@@ -353,15 +353,15 @@ func (r *Resource) Update(ctx context.Context, item *Item, original *Item) (err 
 			})
 		}(time.Now())
 	}
-	if err = r.hooks.onUpdate(ctx, item, original); err == nil {
+	if err = r.hooks.onUpdate(ctx, rq, item, original); err == nil {
 		err = r.storage.Update(ctx, item, original)
 	}
-	r.hooks.onUpdated(ctx, item, original, &err)
+	r.hooks.onUpdated(ctx, rq, item, original, &err)
 	return
 }
 
 // Delete implements Storer interface
-func (r *Resource) Delete(ctx context.Context, item *Item) (err error) {
+func (r *Resource) Delete(ctx context.Context, rq *http.Request, item *Item) (err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			Logger(ctx, LogLevelDebug, fmt.Sprintf("%s.Delete(%v)", r.path, item.ID), map[string]interface{}{
@@ -370,15 +370,15 @@ func (r *Resource) Delete(ctx context.Context, item *Item) (err error) {
 			})
 		}(time.Now())
 	}
-	if err = r.hooks.onDelete(ctx, item); err == nil {
+	if err = r.hooks.onDelete(ctx, rq, item); err == nil {
 		err = r.storage.Delete(ctx, item)
 	}
-	r.hooks.onDeleted(ctx, item, &err)
+	r.hooks.onDeleted(ctx, rq, item, &err)
 	return
 }
 
 // Clear implements Storer interface
-func (r *Resource) Clear(ctx context.Context, lookup *Lookup) (deleted int, err error) {
+func (r *Resource) Clear(ctx context.Context, rq *http.Request, lookup *Lookup) (deleted int, err error) {
 	if LoggerLevel <= LogLevelDebug && Logger != nil {
 		defer func(t time.Time) {
 			Logger(ctx, LogLevelDebug, fmt.Sprintf("%s.Clear(%v)", r.path, lookup), map[string]interface{}{
@@ -388,9 +388,9 @@ func (r *Resource) Clear(ctx context.Context, lookup *Lookup) (deleted int, err 
 			})
 		}(time.Now())
 	}
-	if err = r.hooks.onClear(ctx, lookup); err == nil {
+	if err = r.hooks.onClear(ctx, rq, lookup); err == nil {
 		deleted, err = r.storage.Clear(ctx, lookup)
 	}
-	r.hooks.onCleared(ctx, lookup, &deleted, &err)
+	r.hooks.onCleared(ctx, rq, lookup, &deleted, &err)
 	return
 }

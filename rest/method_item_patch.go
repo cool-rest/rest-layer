@@ -22,7 +22,7 @@ func itemPatch(ctx context.Context, r *http.Request, route *RouteMatch) (status 
 	// Get original item if any
 	rsrc := route.Resource()
 	var original *resource.Item
-	if l, err := rsrc.Find(ctx, lookup, 1, 1); err != nil {
+	if l, err := rsrc.Find(ctx, r,  lookup, 1, 1); err != nil {
 		// If item can't be fetch, return an error
 		e = NewError(err)
 		return e.Code, nil, e
@@ -61,7 +61,7 @@ func itemPatch(ctx context.Context, r *http.Request, route *RouteMatch) (status 
 	// handler to ensure the stored document didn't change between in the
 	// interval. An ErrPreconditionFailed will be thrown in case of race condition
 	// (i.e.: another thread modified the document between the Find() and the Store())
-	if err := rsrc.Update(ctx, item, original); err != nil {
+	if err := rsrc.Update(ctx,  r,  item, original); err != nil {
 		e = NewError(err)
 		return e.Code, nil, e
 	}
