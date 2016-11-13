@@ -3,8 +3,8 @@ package rest_test
 import (
 	"net/http"
 
-	"github.com/rs/rest-layer/resource"
-	"github.com/rs/rest-layer/rest"
+	"github.com/cool-rest/rest-layer/resource"
+	"github.com/cool-rest/rest-layer/rest"
 	"golang.org/x/net/context"
 )
 

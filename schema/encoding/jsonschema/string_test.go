@@ -3,7 +3,7 @@ package jsonschema_test
 import (
 	"testing"
 
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/schema"
 )
 
 func TestStringValidatorEncode(t *testing.T) {

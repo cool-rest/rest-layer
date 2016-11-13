@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/schema"
 )
 
 func TestFloatValidatorEncode(t *testing.T) {

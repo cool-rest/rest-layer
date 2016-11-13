@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/graphql-go/graphql"
-	"github.com/rs/rest-layer/resource"
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/resource"
+	"github.com/cool-rest/rest-layer/schema"
 )
 
 func newRootQuery(idx resource.Index) *graphql.Object {

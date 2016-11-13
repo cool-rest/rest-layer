@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/schema"
 )
 
 // Etag computes an etag based on containt of the payload

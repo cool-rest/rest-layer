@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/rs/rest-layer/resource"
+	"github.com/cool-rest/rest-layer/resource"
 	"golang.org/x/net/context"
 )
 

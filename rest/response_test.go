@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rs/rest-layer/resource"
+	"github.com/cool-rest/rest-layer/resource"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 )

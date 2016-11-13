@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/schema"
 )
 
 var (

@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/rs/rest-layer-mem"
-	"github.com/rs/rest-layer/resource"
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/resource"
+	"github.com/cool-rest/rest-layer/schema"
 )
 
 func BenchmarkServeHTTP(b *testing.B) {

@@ -6,7 +6,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/rs/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/schema"
 	"golang.org/x/net/context"
 )
 

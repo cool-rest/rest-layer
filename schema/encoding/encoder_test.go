@@ -2,8 +2,8 @@ package encoding
 
 import (
 	"bytes"
-	"github.com/rs/rest-layer/schema"
-	"github.com/rs/rest-layer/schema/encoding/jsonschema"
+	"github.com/cool-rest/rest-layer/schema"
+	"github.com/cool-rest/rest-layer/schema/encoding/jsonschema"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
