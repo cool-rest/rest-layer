@@ -13,12 +13,12 @@ import (
 // Lookup holds filter and sort used to select items in a resource collection
 type Lookup struct {
 	// The client supplied filter. Filter is a MongoDB inspired query with a more limited
-	// set of capabilities. See https://github.com/rs/rest-layer#filtering
+	// set of capabilities. See https://github.com/cool-rest/rest-layer#filtering
 	// for more info.
 	filter schema.Query
 	// The client supplied soft. Sort is a list of resource fields or sub-fields separated
 	// by comas (,). To invert the sort, a minus (-) can be prefixed.
-	// See https://github.com/rs/rest-layer#sorting for more info.
+	// See https://github.com/cool-rest/rest-layer#sorting for more info.
 	sort []string
 	// The client supplied selector. Selector is a way for the client to reformat the
 	// resource representation at runtime by defining which fields should be included
@@ -59,14 +59,14 @@ func NewLookupWithQuery(q schema.Query) *Lookup {
 // Sort is a list of resource fields or sub-fields separated
 // by comas (,). To invert the sort, a minus (-) can be prefixed.
 //
-// See https://github.com/rs/rest-layer#sorting for more info.
+// See https://github.com/cool-rest/rest-layer#sorting for more info.
 func (l *Lookup) Sort() []string {
 	return l.sort
 }
 
 // Filter is a MongoDB inspired query with a more limited set of capabilities.
 //
-// See https://github.com/rs/rest-layer#filtering for more info.
+// See https://github.com/cool-rest/rest-layer#filtering for more info.
 func (l *Lookup) Filter() schema.Query {
 	return l.filter
 }

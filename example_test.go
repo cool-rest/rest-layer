@@ -10,13 +10,13 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/justinas/alice"
-	"github.com/rs/cors"
+	"github.com/cool-rest/cors"
 	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/rest"
 	"github.com/cool-rest/rest-layer/schema"
-	"github.com/rs/xaccess"
-	"github.com/rs/xlog"
+	"github.com/cool-rest/xaccess"
+	"github.com/cool-rest/xlog"
 )
 
 func Example() {
@@ -151,7 +151,7 @@ func Example() {
 	// Add timeout handler
 	//c.Append(xhandler.TimeoutHandler(2 * time.Second))
 
-	// Install a logger (see https://github.com/rs/xlog)
+	// Install a logger (see https://github.com/cool-rest/xlog)
 	c.Append(xlog.NewHandler(xlog.Config{}))
 	resource.LoggerLevel = resource.LogLevelDebug
 	resource.Logger = func(ctx context.Context, level resource.LogLevel, msg string, fields map[string]interface{}) {

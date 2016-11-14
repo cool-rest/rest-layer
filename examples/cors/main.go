@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rs/cors"
+	"github.com/cool-rest/cors"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/rest"
 )

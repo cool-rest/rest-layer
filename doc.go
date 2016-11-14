@@ -5,7 +5,7 @@ and secure REST (graph) API on top of pluggable backend storages with no boiler
 plate code so can focus on your business logic.
 
 Implemented as a net/http middleware, it plays well with other middleware like
-CORS (http://github.com/rs/cors) and is net/context aware thanks to xhandler.
+CORS (http://github.com/cool-rest/cors) and is net/context aware thanks to xhandler.
 
 REST Layer is an opinionated framework. Unlike many API frameworks, you don’t
 directly control the routing and you don’t have to write handlers. You just
@@ -16,8 +16,8 @@ handles HTTP conditional requests, caching, integrity checking for you.
 
 A powerful and extensible validation engine make sure that data comes
 pre-validated to your custom storage handlers. Generic resource handlers for
-MongoDB (http://github.com/rs/rest-layer-mongo), ElastiSearch
-(http://github.com/rs/rest-layer-es) and other databases are also available so
+MongoDB (http://github.com/cool-rest/rest-layer-mongo), ElastiSearch
+(http://github.com/cool-rest/rest-layer-es) and other databases are also available so
 you have few to no code to write to make the whole system work.
 
 Moreover, REST Layer let you create a graph API by linking resources between
