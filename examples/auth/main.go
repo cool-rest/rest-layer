@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/justinas/alice"
+	"github.com/cool-rest/alice"
 	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/rest"

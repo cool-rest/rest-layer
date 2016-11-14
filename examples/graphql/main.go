@@ -13,7 +13,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/justinas/alice"
+	"github.com/cool-rest/alice"
 	"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/graphql"
 	"github.com/cool-rest/rest-layer/resource"
