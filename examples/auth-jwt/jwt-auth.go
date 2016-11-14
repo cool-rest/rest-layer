@@ -1,6 +1,3 @@
-
-// +build go1.7
-
 package main
 
 import (
@@ -13,13 +10,15 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/cool-rest/alice"
-	"github.com/cool-rest/rest-layer-mem"
+	//"github.com/cool-rest/rest-layer-mem"
 	"github.com/cool-rest/rest-layer/resource"
 	"github.com/cool-rest/rest-layer/rest"
 	"github.com/cool-rest/rest-layer/schema"
 	"github.com/cool-rest/xaccess"
 	"github.com/cool-rest/xlog"
 	"golang.org/x/net/context"
+	"gopkg.in/mgo.v2"
+	"github.com/cool-rest/rest-layer-mongo"
 )
 
 // NOTE: this example show how to integrate REST Layer with JWT. No authentication is performed
@@ -192,13 +191,20 @@ func (a AuthResourceHook) OnUpdate(ctx context.Context, r *http.Request, item *r
 		return resource.ErrUnauthorized
 	}
 	// Check access right
+	fmt.Println("original.Payload[a.UserField]:", original.Payload[a.UserField])
+	fmt.Println("original.Payload[a.UserField]:", original)
 	if u, found := original.Payload[a.UserField]; !found || u != user.ID {
+		fmt.Println("u:", u)
+		fmt.Println("user.ID:", user.ID)
+		fmt.Println("found:", found)
 		return resource.ErrUnauthorized
 	}
 	// Ensure user field is not altered
+	fmt.Println("item:", item)
+ /*
 	if u, found := item.Payload[a.UserField]; !found || u != user.ID {
-		return resource.ErrUnauthorized
-	}
+		eturn resource.ErrUnauthorized
+	}*/
 	return nil
 }
 
@@ -301,11 +307,17 @@ var (
 func main() {
 	flag.Parse()
 
+	session, err := mgo.Dial("127.0.0.1")
+	if err != nil {
+		log.Fatalf("Can't connect to MongoDB: %s", err)
+	}
+	db := "hellodb"
+
 	// Create a REST API resource index
 	index := resource.NewIndex()
 
 	// Bind user on /users
-	users := index.Bind("users", user, mem.NewHandler(), resource.Conf{
+	users := index.Bind("users", user, mongo.NewHandler(session, db, "users"), resource.Conf{
 		AllowedModes: resource.ReadWrite,
 	})
 
@@ -325,7 +337,7 @@ func main() {
 	})
 
 	// Bind post on /posts
-	posts := index.Bind("posts", post, mem.NewHandler(), resource.Conf{
+	posts := index.Bind("posts", post, mongo.NewHandler(session, db, "posts"), resource.Conf{
 		AllowedModes: resource.ReadWrite,
 	})
 
