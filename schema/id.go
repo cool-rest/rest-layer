@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"github.com/rs/xid"
+	"github.com/cool-rest/xid"
 	"golang.org/x/net/context"
 )
 
